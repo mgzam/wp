@@ -1,0 +1,41 @@
+kind: Template
+apiVersion: v1
+metadata:
+    name: '${DB_NAME}-pvc'
+    annotations:
+        description: 'mysql database, persistent volume'
+        tags: 'database,mysql, persistent volume claim'
+    labels:
+        template: "${DB_NAME}-pvc"
+objects:
+    - 
+        kind: PersistentVolumeClaim
+        apiVersion: v1
+        metadata:
+            name: '${DB_NAME}-data'
+            labels:
+                app: '${APPLICATION_NAME}'
+        spec:
+            accessModes:
+                - ReadWriteOnce
+            resources:
+                requests:
+                    storage: '${DATABASE_VOLUME_SIZE}'
+parameters:
+    - 
+        name: DB_NAME
+        description: The name of the WordPress instance.
+        value: my-wordpress-site-db
+        from: '[a-zA-Z0-9]'
+        required: true
+    - 
+        name: DATABASE_VOLUME_SIZE
+        description: Size of the persistent volume for the database.
+        value: 1Gi
+        required: true
+    - 
+        name: APPLICATION_NAME
+        description: The name of the WordPress instance.
+        value: my-wordpress-site
+        from: '[a-zA-Z0-9]'
+        required: true

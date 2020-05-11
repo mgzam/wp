@@ -1,0 +1,116 @@
+kind: Template
+apiVersion: v1
+metadata:
+    name: '${DB_NAME}'
+    annotations:
+        description: mysql database deployment
+        tags: 'database,mysql,deployment'
+    labels:
+        template: "${DB_NAME}"
+objects:
+    - 
+        kind: DeploymentConfig
+        apiVersion: v1
+        metadata:
+            name: '${DB_NAME}'
+            labels:
+                app: '${APPLICATION_NAME}'
+        spec:
+            strategy:
+                type: Recreate
+            triggers:
+                - 
+                    type: ConfigChange
+                - 
+                    type: ImageChange
+                    imageChangeParams:
+                        automatic: true
+                        containerNames:
+                            - mysql
+                        from:
+                            kind: ImageStreamTag
+                            namespace: openshift
+                            name: 'mysql:${MYSQL_VERSION}'
+            replicas: 1
+            selector:
+                app: '${APPLICATION_NAME}'
+                deploymentconfig: '${DB_NAME}'
+            template:
+                metadata:
+                    labels:
+                        app: '${APPLICATION_NAME}'
+                        deploymentconfig: '${DB_NAME}'
+                spec:
+                    volumes:
+                        - 
+                            name: data
+                            persistentVolumeClaim:
+                                claimName: '${DB_NAME}-data'
+                    containers:
+                        - 
+                            name: mysql
+                            image: mysql
+                            ports:
+                                - 
+                                    containerPort: 3306
+                                    protocol: TCP
+                            resources:
+                                limits:
+                                    memory: '${DATABASE_MEMORY_LIMIT}'
+                            readinessProbe:
+                                timeoutSeconds: 1
+                                initialDelaySeconds: 5
+                                exec:
+                                    command:
+                                        - /bin/sh
+                                        - '-i'
+                                        - '-c'
+                                        - "MYSQL_PWD=\"$MYSQL_PASSWORD\" mysql -h 127.0.0.1 -u $MYSQL_USER -D $MYSQL_DATABASE -e 'SELECT 1'"
+                            livenessProbe:
+                                timeoutSeconds: 1
+                                initialDelaySeconds: 30
+                                tcpSocket:
+                                    port: 3306
+                            env:
+                                - 
+                                    name: MYSQL_DATABASE
+                                    value: wordpress
+                                - 
+                                    name: MYSQL_USER
+                                    valueFrom:
+                                      secretKeyRef:
+                                        key: DATABASE_USERNAME
+                                        name: "${APPLICATION_NAME}-mysql-secret"
+                                - 
+                                    name: MYSQL_PASSWORD
+                                    valueFrom:
+                                      secretKeyRef:
+                                        key: DATABASE_PASSWORD
+                                        name: "${APPLICATION_NAME}-mysql-secret"
+                            volumeMounts:
+                                - 
+                                    name: data
+                                    mountPath: /var/lib/mysql/data
+parameters:
+    - 
+        name: DB_NAME
+        description: The name of the database instance.
+        value: my-wordpress-site-db
+        from: '[a-zA-Z0-9]'
+        required: true
+    - 
+        description: "The name of the WordPress instance."
+        from: "[a-zA-Z0-9]"
+        name: APPLICATION_NAME
+        required: true
+        value: my-wordpress-site
+    - 
+        name: DATABASE_MEMORY_LIMIT
+        description: Amount of memory available to the database.
+        value: 512Mi
+        required: true
+    - 
+        name: MYSQL_VERSION
+        description: The version of the MySQL database.
+        value: '5.7'
+        required: true

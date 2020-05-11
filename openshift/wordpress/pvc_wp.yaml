@@ -1,0 +1,40 @@
+kind: Template
+apiVersion: v1
+metadata:
+    name: '${APPLICATION_NAME}-pvc'
+    annotations:
+        description: wordpress persistent volume
+        tags: 'wordpress,persistent volume claim'
+    labels:
+        template: "${APPLICATION_NAME}-pvc"
+objects:
+    - 
+        kind: PersistentVolumeClaim
+        apiVersion: v1
+        metadata:
+            name: '${APPLICATION_NAME}-data'
+            labels:
+                app: '${APPLICATION_NAME}'
+        spec:
+            accessModes:
+                - '${WORDPRESS_VOLUME_TYPE}'
+            resources:
+                requests:
+                    storage: '${WORDPRESS_VOLUME_SIZE}'
+parameters:
+    - 
+        name: APPLICATION_NAME
+        description: The name of the WordPress instance.
+        value: my-wordpress-site
+        from: '[a-zA-Z0-9]'
+        required: true
+    - 
+        name: WORDPRESS_VOLUME_SIZE
+        description: Size of the persistent volume for Wordpress.
+        value: 1Gi
+        required: true
+    - 
+        name: WORDPRESS_VOLUME_TYPE
+        description: Type of the persistent volume for Wordpress.
+        value: ReadWriteOnce
+        required: true

@@ -1,0 +1,71 @@
+kind: Template
+apiVersion: v1
+metadata:
+    name: '${APPLICATION_NAME}-bc'
+    annotations:
+        description: wordpress build config
+        tags: 'wordpress,buildconfig'
+    labels: 
+        template: "${APPLICATION_NAME}-bc"
+objects:
+    - 
+        kind: BuildConfig
+        apiVersion: v1
+        metadata:
+            name: '${APPLICATION_NAME}'
+            labels:
+                app: '${APPLICATION_NAME}'
+        spec:
+            triggers:
+                - 
+                    type: ConfigChange
+                - 
+                    type: ImageChange
+            source:
+                type: Git
+                git:
+                    uri: '${QUICKSTART_REPOSITORY_URL}'
+            strategy:
+                type: Source
+                sourceStrategy:
+                    from:
+                        kind: ImageStreamTag
+                        namespace: openshift
+                        name: 'php:${PHP_VERSION}'
+            output:
+                to:
+                    kind: ImageStreamTag
+                    name: '${APPLICATION_NAME}-img:latest'
+                imageLabels:
+                    - 
+                        name: io.k8s.display-name
+                        value: WordPress
+                    - 
+                        name: io.k8s.description
+                        value: WordPress application and S2I builder.
+                    - 
+                        name: io.openshift.s2i.scripts-url
+                        value: 'image:///opt/app-root/s2i'
+                    - 
+                        name: io.s2i.scripts-url
+                        value: 'image:///opt/app-root/s2i'
+                    - 
+                        name: io.openshift.tags
+                        value: 'builder,php,wordpress'
+parameters:
+    - 
+        name: APPLICATION_NAME
+        description: The name of the WordPress instance.
+        value: my-wordpress-site
+        from: '[a-zA-Z0-9]'
+        required: true
+    - 
+        name: QUICKSTART_REPOSITORY_URL
+        description: The URL of the quickstart Git repository.
+        value: 'https://github.com/openshift-evangelists/wordpress-quickstart'
+        required: true
+    - 
+        name: PHP_VERSION
+        description: The version of the PHP builder.
+        value: '7.0'
+        required: true

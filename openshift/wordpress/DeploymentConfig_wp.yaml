@@ -1,0 +1,202 @@
+--- 
+apiVersion: v1
+kind: Template
+metadata: 
+  annotations: 
+    description: "wordpress deployment"
+    tags: "wordpress,deployment"
+  labels: 
+    template: "${APPLICATION_NAME}"
+  name: "${APPLICATION_NAME}"
+objects: 
+  - 
+    apiVersion: v1
+    kind: DeploymentConfig
+    metadata: 
+      labels: 
+        app: "${APPLICATION_NAME}"
+      name: "${APPLICATION_NAME}"
+    spec: 
+      replicas: 1
+      selector: 
+        app: "${APPLICATION_NAME}"
+        deploymentconfig: "${APPLICATION_NAME}"
+      strategy: 
+        type: "${WORDPRESS_DEPLOYMENT_STRATEGY}"
+      template: 
+        metadata: 
+          labels: 
+            app: "${APPLICATION_NAME}"
+            deploymentconfig: "${APPLICATION_NAME}"
+        spec: 
+          initContainers:
+            - name: init-mysql-db
+              image: docker-registry.default.svc:5000/openshift/mysql:5.7
+              command: ['sh', '-c', '/opt/wordpress/init-mysql-db.sh']
+              volumeMounts:
+              - name: init-db-vol
+                mountPath: "/opt/wordpress"
+              env:
+              - 
+                  name: HTTPS_PROXY
+                  value: "http://emea-aws-webproxy.service.cloud.local:3128"
+              - 
+                  name: no_proxy
+                  value: ".cloud.local,.cluster.local,.compute.internal,.service.cloud.local,.svc,169.254.169.254,172.30.0.0/16,172.30.0.1,194.13.15.158,194.13.15.165,194.13.15.221,internal-scale-p-m-prv-elb-1669101997.eu-west-1.elb.amazonaws.com,ip-194-13-15-139.eu-west-1.compute.internal,ip-194-13-15-140.eu-west-1.compute.internal,ip-194-13-15-158.eu-west-1.compute.internal,ip-194-13-15-165.eu-west-1.compute.internal,ip-194-13-15-168.eu-west-1.compute.internal,ip-194-13-15-171.eu-west-1.compute.internal,ip-194-13-15-207.eu-west-1.compute.internal,ip-194-13-15-217.eu-west-1.compute.internal,ip-194-13-15-221.eu-west-1.compute.internal,s3.eu-west-1.amazonaws.com"
+              - 
+                  name: MYSQL_DATABASE
+                  value: wordpress
+              - 
+                  name: MYSQL_USER
+                  valueFrom:
+                    secretKeyRef:
+                      key: DATABASE_USERNAME
+                      name: "${APPLICATION_NAME}-mysql-secret"
+              - 
+                  name: MYSQL_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: DATABASE_PASSWORD
+                      name: "${APPLICATION_NAME}-mysql-secret"
+              - 
+                  name: MYSQL_HOST
+                  value: "${APPLICATION_NAME}-db"
+              - 
+                  name: MYSQL_TABLE_PREFIX
+                  value: wp_
+              - 
+                  name: ZIP_LINK_SQL
+                  value: ${ZIP_LINK_SQL}
+              - 
+                  name: OLD_URL
+                  value: ${OLD_URL}
+              -  
+                  name: NEW_URL
+                  value: ${NEW_URL}
+          containers: 
+            - 
+              env: 
+                - 
+                  name: HTTPS_PROXY
+                  value: "http://emea-aws-webproxy.service.cloud.local:3128"
+                - 
+                  name: no_proxy
+                  value: ".cloud.local,.cluster.local,.compute.internal,.service.cloud.local,.svc,169.254.169.254,172.30.0.0/16,172.30.0.1,194.13.15.158,194.13.15.165,194.13.15.221,internal-scale-p-m-prv-elb-1669101997.eu-west-1.elb.amazonaws.com,ip-194-13-15-139.eu-west-1.compute.internal,ip-194-13-15-140.eu-west-1.compute.internal,ip-194-13-15-158.eu-west-1.compute.internal,ip-194-13-15-165.eu-west-1.compute.internal,ip-194-13-15-168.eu-west-1.compute.internal,ip-194-13-15-171.eu-west-1.compute.internal,ip-194-13-15-207.eu-west-1.compute.internal,ip-194-13-15-217.eu-west-1.compute.internal,ip-194-13-15-221.eu-west-1.compute.internal,s3.eu-west-1.amazonaws.com"
+                - 
+                  name: MYSQL_DATABASE
+                  value: wordpress
+                - 
+                  name: MYSQL_USER
+                  valueFrom:
+                    secretKeyRef:
+                      key: DATABASE_USERNAME
+                      name: "${APPLICATION_NAME}-mysql-secret"
+                - 
+                  name: MYSQL_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: DATABASE_PASSWORD
+                      name: "${APPLICATION_NAME}-mysql-secret"
+                - 
+                  name: MYSQL_HOST
+                  value: "${APPLICATION_NAME}-db"
+                - 
+                  name: MYSQL_TABLE_PREFIX
+                  value: wp_
+              image: "${APPLICATION_NAME}-img"
+              livenessProbe: 
+                failureThreshold: 3
+                httpGet: 
+                  httpHeaders: 
+                    - 
+                      name: X-Forwarded-Proto
+                      value: https
+                  path: /wp-admin/install.php
+                  port: 8080
+                  scheme: HTTP
+                periodSeconds: 10
+                successThreshold: 1
+                timeoutSeconds: 1
+              name: wordpress
+              ports: 
+                - 
+                  containerPort: 8080
+                  protocol: TCP
+              readinessProbe: 
+                failureThreshold: 3
+                httpGet: 
+                  httpHeaders: 
+                    - 
+                      name: X-Forwarded-Proto
+                      value: https
+                  path: /wp-admin/install.php
+                  port: 8080
+                  scheme: HTTP
+                periodSeconds: 10
+                successThreshold: 1
+                timeoutSeconds: 1
+              resources: 
+                limits: 
+                  memory: "${WORDPRESS_MEMORY_LIMIT}"
+              volumeMounts: 
+                - 
+                  mountPath: /opt/app-root/src
+                  name: data
+          volumes: 
+            - 
+              name: data
+              persistentVolumeClaim: 
+                claimName: "${APPLICATION_NAME}-data"
+            - 
+              name: init-db-vol
+              configMap:
+                name: ${APPLICATION_NAME}-wordpress-init-mysql-db
+                items:
+                - key: init-mysql-db.sh
+                  path: init-mysql-db.sh
+                  mode: 0550
+      triggers: 
+        - 
+          type: ConfigChange
+        - 
+          imageChangeParams: 
+            automatic: true
+            containerNames: 
+              - wordpress
+            from: 
+              kind: ImageStreamTag
+              name: "${APPLICATION_NAME}-img:latest"
+          type: ImageChange
+
+parameters: 
+  - 
+    description: "The name of the WordPress instance."
+    from: "[a-zA-Z0-9]"
+    name: APPLICATION_NAME
+    required: true
+    value: my-wordpress-site
+  - 
+    description: "Type of the deployment strategy for Wordpress."
+    name: WORDPRESS_DEPLOYMENT_STRATEGY
+    required: true
+    value: Recreate
+  - 
+    description: "Amount of memory available to WordPress."
+    name: WORDPRESS_MEMORY_LIMIT
+    required: true
+    value: 512Mi
+  - 
+    description: "Link of the SQL file"
+    name: ZIP_LINK_SQL
+    required: true
+    value: 
+  - 
+    description: "link of your old URL"
+    name: OLD_URL
+    required: true
+    value: 
+  - 
+    description: "Link of your new URL"
+    name: NEW_URL
+    required: true
+    value: 

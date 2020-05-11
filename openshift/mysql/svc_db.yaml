@@ -1,0 +1,37 @@
+---
+apiVersion: v1
+kind: Template
+metadata:
+  name: "${APPLICATION_NAME}-svc"
+  annotations:
+    description: wordpress service
+    tags: wordpress,service
+  labels:
+    template: "${APPLICATION_NAME}-svc" 
+objects:
+- kind: Service
+  apiVersion: v1
+  metadata:
+    name: "${DB_NAME}"
+    labels:
+      app: "${APPLICATION_NAME}"
+  spec:
+   ports:
+   - name: 3306-tcp
+     protocol: TCP
+     port: 3306
+     targetPort: 3306
+   selector:
+     app: "${APPLICATION_NAME}"
+     deploymentconfig: "${DB_NAME}"
+parameters:
+ - name: DB_NAME
+   description: The name of the WordPress instance.
+   value: my-wordpress-site-db
+   from: '[a-zA-Z0-9]'
+   required: true
+ - name: APPLICATION_NAME
+   description: The name of the WordPress instance.
+   value: my-wordpress-site
+   from: '[a-zA-Z0-9]'
+   required: true

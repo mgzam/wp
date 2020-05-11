@@ -1,0 +1,36 @@
+---
+apiVersion: v1
+kind: Template
+metadata:
+  name: "${APPLICATION_NAME}"
+  annotations:
+    description: wordpress route
+    tags: wordpress,route
+  labels:
+    template: "${APPLICATION_NAME}" 
+objects:
+-
+  kind: Route
+  apiVersion: v1
+  metadata:
+    name: "${APPLICATION_NAME}"
+    labels:
+      app: "${APPLICATION_NAME}"
+  spec:
+    host: ''
+    to:
+      kind: Service
+      name: "${APPLICATION_NAME}"
+      weight: 100
+    port:
+      targetPort: 8080
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Allow
+      
+parameters:
+ - name: APPLICATION_NAME
+   description: The name of the WordPress Application.
+   value: my-wordpress-site
+   from: '[a-zA-Z0-9]'
+   required: true
