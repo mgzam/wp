@@ -22,7 +22,7 @@ objects:
       contextDir: 
       git:
         ref: master
-        uri: 'ssh://git@github.com/sculang/demo-wp.git'
+        uri: 'ssh://git@github.com:/sculang/demo-wp.git'
       sourceSecret:
         name: jenkins-git-credentials
       type: Git
