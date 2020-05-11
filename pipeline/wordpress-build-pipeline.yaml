@@ -1,5 +1,5 @@
 kind: Template
-apiVersion: v1
+apiVersion: template.openshift.io/v1
 metadata:
     name: 'wordpress-migration-template'
     annotations:
@@ -10,7 +10,7 @@ metadata:
         template: "wordpress-migration-template"
 objects:
 - 
-  apiVersion: build.openshift.io/v1
+  apiVersion: v1
   kind: BuildConfig
   metadata:
     name: wordpress-build-pipeline
@@ -22,7 +22,7 @@ objects:
       contextDir: 
       git:
         ref: master
-        uri: 'https://git-scale-tools.scale-n-eu.sanofi.com/I0425375/WordPress-Migration.git'
+        uri: 'ssh://git@github.com:sculang/demo-wp.git'
       sourceSecret:
         name: jenkins-git-credentials
       type: Git
@@ -33,14 +33,14 @@ objects:
           - name: BRANCH
             value: master
           - name: SOURCES_URL
-            value: https://git-scale-tools.scale-n-eu.sanofi.com/I0425375/WordPress-Migration.git
+            value: ssh://git@github.com:sculang/demo-wp.git
           - name: APPLICATION_NAME
             value: ${APPLICATION_NAME}
       type: JenkinsPipeline
     triggers: []
 
 - 
-  apiVersion: build.openshift.io/v1
+  apiVersion: v1
   kind: BuildConfig
   metadata:
     name: wordpress-deploy-pipeline
@@ -52,7 +52,7 @@ objects:
       contextDir: 
       git:
         ref: master
-        uri: 'https://git-scale-tools.scale-n-eu.sanofi.com/I0425375/WordPress-Migration.git'
+        uri: 'ssh://git@github.com:sculang/demo-wp.git'
       sourceSecret:
         name: jenkins-git-credentials   
       type: Git
@@ -63,7 +63,7 @@ objects:
           - name: BRANCH
             value: master
           - name: SOURCES_URL
-            value: https://git-scale-tools.scale-n-eu.sanofi.com/I0425375/WordPress-Migration.git
+            value: ssh://git@github.com:sculang/demo-wp.git
           - name: DEPLOY_PROJECT
             value: ${DEPLOY_PROJECT}
           - name: APPLICATION_NAME
