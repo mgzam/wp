@@ -63,7 +63,7 @@ objects:
           - name: BRANCH
             value: master
           - name: SOURCES_URL
-            value: ssh://git@github.com/sculang/demo-wp.git
+            value: ssh://git@github.com:/sculang/demo-wp.git
           - name: DEPLOY_PROJECT
             value: ${DEPLOY_PROJECT}
           - name: APPLICATION_NAME
