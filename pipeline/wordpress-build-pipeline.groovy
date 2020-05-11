@@ -3,7 +3,7 @@ properties([
     parameters([
         string(name: 'BRANCH', defaultValue: 'master', description: '', trim: false),
         string(name: 'GIT_CREDENTIALS', defaultValue: 'jenkins-git-credentials', description: '', trim: false),
-        string(name: 'SOURCES_URL', defaultValue: 'ssh://git@github.com:sculang/demo-wp.git', description: '', trim: false),
+        string(name: 'SOURCES_URL', defaultValue: 'ssh://git@github.com:/sculang/demo-wp.git', description: '', trim: false),
         string(name: 'APPLICATION_NAME', defaultValue: '', description: ''),
     ])
 ])
