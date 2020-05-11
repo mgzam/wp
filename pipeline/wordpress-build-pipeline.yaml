@@ -22,7 +22,7 @@ objects:
       contextDir: 
       git:
         ref: master
-        uri: 'ssh://git@github.com:sculang/demo-wp.git'
+        uri: 'ssh://git@github.com/sculang/demo-wp.git'
       sourceSecret:
         name: jenkins-git-credentials
       type: Git
@@ -33,7 +33,7 @@ objects:
           - name: BRANCH
             value: master
           - name: SOURCES_URL
-            value: ssh://git@github.com:sculang/demo-wp.git
+            value: ssh://git@github.com/sculang/demo-wp.git
           - name: APPLICATION_NAME
             value: ${APPLICATION_NAME}
       type: JenkinsPipeline
@@ -52,7 +52,7 @@ objects:
       contextDir: 
       git:
         ref: master
-        uri: 'ssh://git@github.com:sculang/demo-wp.git'
+        uri: 'ssh://git@github.com/sculang/demo-wp.git'
       sourceSecret:
         name: jenkins-git-credentials   
       type: Git
@@ -63,7 +63,7 @@ objects:
           - name: BRANCH
             value: master
           - name: SOURCES_URL
-            value: ssh://git@github.com:sculang/demo-wp.git
+            value: ssh://git@github.com/sculang/demo-wp.git
           - name: DEPLOY_PROJECT
             value: ${DEPLOY_PROJECT}
           - name: APPLICATION_NAME
