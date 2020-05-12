@@ -22,9 +22,9 @@ objects:
       contextDir: 
       git:
         ref: master
-        uri: 'ssh://git@github.com:/sculang/demo-wp.git'
+        uri: 'https://git@github.com:/sculang/demo-wp.git'
       sourceSecret:
-        name: jenkins-git-credentials
+        name: my-github-secret
       type: Git
     strategy:
       jenkinsPipelineStrategy:
@@ -33,9 +33,11 @@ objects:
           - name: BRANCH
             value: master
           - name: SOURCES_URL
-            value: ssh://git@github.com:/sculang/demo-wp.git
+            value: 'https://git@github.com:/sculang/demo-wp.git'
           - name: APPLICATION_NAME
             value: ${APPLICATION_NAME}
+          - name: GIT_CREDENTIALS
+            value: scu-wordpress-my-github-token            
       type: JenkinsPipeline
     triggers: []
 
@@ -52,9 +54,9 @@ objects:
       contextDir: 
       git:
         ref: master
-        uri: 'ssh://git@github.com:/sculang/demo-wp.git'
+        uri: 'https://git@github.com:/sculang/demo-wp.git'
       sourceSecret:
-        name: jenkins-git-credentials   
+        name: my-github-secret
       type: Git
     strategy:
       jenkinsPipelineStrategy:
@@ -63,7 +65,9 @@ objects:
           - name: BRANCH
             value: master
           - name: SOURCES_URL
-            value: ssh://git@github.com:/sculang/demo-wp.git
+            value: 'https://git@github.com:/sculang/demo-wp.git'
+          - name: GIT_CREDENTIALS
+            value: scu-wordpress-my-github-token                
           - name: DEPLOY_PROJECT
             value: ${DEPLOY_PROJECT}
           - name: APPLICATION_NAME
