@@ -31,7 +31,7 @@ objects:
         spec: 
           initContainers:
             - name: init-mysql-db
-              image: docker-registry.default.svc:5000/openshift/mysql:5.7
+              image: image-registry.openshift-image-registry.svc:5000/openshift/mysql:5.7
               command: ['sh', '-c', '/opt/wordpress/init-mysql-db.sh']
               volumeMounts:
               - name: init-db-vol
