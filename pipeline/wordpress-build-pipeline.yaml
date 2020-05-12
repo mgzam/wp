@@ -98,7 +98,7 @@ parameters:
   required: true
 - name: DEPLOY_PROJECT
   description: The name of the project to deploy the website.
-  value: wordpress-migration-test
+  value: scu-wordpress
   from: "[a-zA-Z0-9]"
   required: true
 - name: APP_HOST
