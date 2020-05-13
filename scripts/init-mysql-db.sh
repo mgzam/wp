@@ -14,9 +14,6 @@ WORKDIR="/tmp/wordpress"
 mkdir -p $WORKDIR
 cd $WORKDIR || exit
 
-export http_proxy=http://emea-aws-webproxy.service.cloud.local:3128
-export https_proxy=http://emea-aws-webproxy.service.cloud.local:3128
-
 # download site content
 
 echo "[INFO] Downloading data SQL files.."
