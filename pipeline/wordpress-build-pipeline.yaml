@@ -22,9 +22,9 @@ objects:
       contextDir: 
       git:
         ref: master
-        uri: 'https://git@github.com:/sculang/demo-wp.git'
+        uri: ${SOURCE_URL}
       sourceSecret:
-        name: my-github-secret
+        name: jenkins-git-credentials
       type: Git
     strategy:
       jenkinsPipelineStrategy:
@@ -33,11 +33,11 @@ objects:
           - name: BRANCH
             value: master
           - name: SOURCES_URL
-            value: 'https://git@github.com:/sculang/demo-wp.git'
+            value: ${SOURCE_URL}
           - name: APPLICATION_NAME
             value: ${APPLICATION_NAME}
           - name: GIT_CREDENTIALS
-            value: scu-wordpress-my-github-token            
+            value: jenkins-git-credentials            
       type: JenkinsPipeline
     triggers: []
 
@@ -54,9 +54,9 @@ objects:
       contextDir: 
       git:
         ref: master
-        uri: 'https://git@github.com:/sculang/demo-wp.git'
+        uri: ${SOURCE_URL}
       sourceSecret:
-        name: my-github-secret
+        name: jenkins-git-credentials
       type: Git
     strategy:
       jenkinsPipelineStrategy:
@@ -65,9 +65,9 @@ objects:
           - name: BRANCH
             value: master
           - name: SOURCES_URL
-            value: 'https://git@github.com:/sculang/demo-wp.git'
+            value: ${SOURCE_URL}
           - name: GIT_CREDENTIALS
-            value: scu-wordpress-my-github-token                
+            value: jenkins-git-credentials                
           - name: DEPLOY_PROJECT
             value: ${DEPLOY_PROJECT}
           - name: APPLICATION_NAME
@@ -86,6 +86,9 @@ objects:
     triggers: []
 
 parameters:
+- name: SOURCES_URL
+  description: URL for the GIT repo where templates reside.
+  value: https://git@github.com:/sculang/demo-wp.git
 - name: APPLICATION_NAME
   description: The name of the WordPress instance.
   value: my-wordpress-site
@@ -97,27 +100,27 @@ parameters:
   from: "[a-zA-Z0-9]"
   required: true
 - name: DEPLOY_PROJECT
-  description: The name of the project to deploy the website.
+  description: The name of the SCALe project to deploy the website.
   value: scu-wordpress
   from: "[a-zA-Z0-9]"
   required: true
 - name: APP_HOST
-  description: Enter your application name
+  description: Enter your application name (hostname of new URL)
   value: my-wordpress-site
   from: "[a-zA-Z0-9]"
   required: false
 - name: ZIP_LINK_WP
-  description: The link of wordpress website content.
+  description: The link of wordpress website content to import.
   value: 
   from: "[a-zA-Z0-9]"
   required: true
 - name: ZIP_LINK_SQL
-  description: The link of SQL dump.
+  description: The link of SQL dump to import.
   value: 
   from: "[a-zA-Z0-9]"
   required: true
 - name: OLD_URL
-  description: link of your old URL
+  description: link of your old URL where the site ran before moving to SCALe
   value: 
   required: true
 
