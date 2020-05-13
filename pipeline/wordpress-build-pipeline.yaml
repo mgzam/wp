@@ -22,7 +22,7 @@ objects:
       contextDir: 
       git:
         ref: master
-        uri: ${SOURCE_URL}
+        uri: ${SOURCES_URL}
       sourceSecret:
         name: jenkins-git-credentials
       type: Git
@@ -33,7 +33,7 @@ objects:
           - name: BRANCH
             value: master
           - name: SOURCES_URL
-            value: ${SOURCE_URL}
+            value: ${SOURCES_URL}
           - name: APPLICATION_NAME
             value: ${APPLICATION_NAME}
           - name: GIT_CREDENTIALS
@@ -54,7 +54,7 @@ objects:
       contextDir: 
       git:
         ref: master
-        uri: ${SOURCE_URL}
+        uri: ${SOURCES_URL}
       sourceSecret:
         name: jenkins-git-credentials
       type: Git
@@ -65,7 +65,7 @@ objects:
           - name: BRANCH
             value: master
           - name: SOURCES_URL
-            value: ${SOURCE_URL}
+            value: ${SOURCES_URL}
           - name: GIT_CREDENTIALS
             value: jenkins-git-credentials                
           - name: DEPLOY_PROJECT
