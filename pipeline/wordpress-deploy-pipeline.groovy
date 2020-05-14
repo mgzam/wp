@@ -3,7 +3,7 @@ properties([
     parameters([
         string(name: 'BRANCH', defaultValue: 'master', description: ''),
         string(name: 'GIT_CREDENTIALS', defaultValue: 'jenkins-git-credentials', description: ''),
-        string(name: 'SOURCES_URL', defaultValue: 'https://git-scale-tools.scale-n-eu.sanofi.com/I0425375/WordPress-Migration.git', description: ''),
+        string(name: 'SOURCES_URL', defaultValue: 'https://git@github.com/sculang/demo-wp', description: ''),
         string(name: 'APPLICATION_NAME', defaultValue: '', description: ''),
         string(name: 'DB_NAME', defaultValue: '', description: ''),
         string(name: 'DEPLOY_PROJECT', defaultValue: '', description: ''),
