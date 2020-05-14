@@ -32,10 +32,6 @@ objects:
         mkdir -p $WORKDIR
         cd $WORKDIR || exit
 
-        export http_proxy=http://emea-aws-webproxy.service.cloud.local:3128
-        export https_proxy=http://emea-aws-webproxy.service.cloud.local:3128
-
-
         #
         # Import Database schema and data
         #
