@@ -46,7 +46,7 @@ objects:
               - 
                   name: NO_PROXY
                   value: ".cloud.local,.cluster.local,.compute.internal,.service.cloud.local,.svc,169.254.169.254,172.30.0.0/16,172.30.0.1,194.13.15.158,194.13.15.165,194.13.15.221,.aws-40e4cd59.scale-k8s.com,s3.eu-west-1.amazonaws.com"
-               - 
+              - 
                   name: https_proxy
                   value: "http://vpce-0c476c7107ff55b6c-nxv1mv5b.vpce-svc-0355b53fe136ffd13.eu-west-1.vpce.amazonaws.com:3128"                  
               - 
@@ -97,7 +97,7 @@ objects:
               - 
                   name: NO_PROXY
                   value: ".cloud.local,.cluster.local,.compute.internal,.service.cloud.local,.svc,169.254.169.254,172.30.0.0/16,172.30.0.1,194.13.15.158,194.13.15.165,194.13.15.221,.aws-40e4cd59.scale-k8s.com,s3.eu-west-1.amazonaws.com"
-               - 
+              - 
                   name: https_proxy
                   value: "http://vpce-0c476c7107ff55b6c-nxv1mv5b.vpce-svc-0355b53fe136ffd13.eu-west-1.vpce.amazonaws.com:3128"                  
               - 
@@ -106,25 +106,25 @@ objects:
               - 
                   name: no_proxy
                   value: ".cloud.local,.cluster.local,.compute.internal,.service.cloud.local,.svc,169.254.169.254,172.30.0.0/16,172.30.0.1,194.13.15.158,194.13.15.165,194.13.15.221,.aws-40e4cd59.scale-k8s.com,s3.eu-west-1.amazonaws.com"                
-                - 
+              - 
                   name: MYSQL_DATABASE
                   value: wordpress
-                - 
+              - 
                   name: MYSQL_USER
                   valueFrom:
                     secretKeyRef:
                       key: DATABASE_USERNAME
                       name: "${APPLICATION_NAME}-mysql-secret"
-                - 
+              - 
                   name: MYSQL_PASSWORD
                   valueFrom:
                     secretKeyRef:
                       key: DATABASE_PASSWORD
                       name: "${APPLICATION_NAME}-mysql-secret"
-                - 
+              - 
                   name: MYSQL_HOST
                   value: "${APPLICATION_NAME}-db"
-                - 
+              - 
                   name: MYSQL_TABLE_PREFIX
                   value: "${DB_TABLES_PREFIX}"
               image: "${APPLICATION_NAME}-img"
@@ -224,8 +224,8 @@ parameters:
     name: NEW_URL
     required: true
     value:
-    
-  - name: DB_TABLES_PREFIX
+  -  
     description: confirm existing wordpress tables prefix
+    name: DB_TABLES_PREFIX
     value: "wp_"
     required: true   
