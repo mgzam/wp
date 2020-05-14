@@ -82,6 +82,8 @@ objects:
             value: ${ZIP_LINK_SQL}
           - name: OLD_URL
             value: ${OLD_URL}
+          - name: DB_TABLES_PREFIX
+            value: ${DB_TABLES_PREFIX}            
       type: JenkinsPipeline
     triggers: []
 
@@ -123,4 +125,8 @@ parameters:
   description: link of your old URL where the site ran before moving to SCALe
   value: 
   required: true
+- name: DB_TABLES_PREFIX
+  description: confirm existing wordpress tables prefix
+  value: "wp_"
+  required: true  
 
