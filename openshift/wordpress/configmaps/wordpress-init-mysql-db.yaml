@@ -70,8 +70,7 @@ objects:
               mysql --host="$MYSQL_HOST" \
                   --user="$MYSQL_USER" \
                   --password="$MYSQL_PASSWORD" \
-                  --database="$MYSQL_DATABASE"  -e "UPDATE wp_options SET option_value = replace(option_value, '$OLD_URL', '$NEW_URL') WHERE option_name = 'home' OR option_name = 'siteurl'; UPDATE wp_posts SET guid = replace(guid, '$OLD_URL','$NEW_URL'); UPDATE wp_posts SET post_content = replace(post_content, '$OLD_URL', '$NEW_URL'); UPDATE wp_postmeta SET meta_value = replace(meta_value,'$OLD_URL','$NEW_URL');"         
-                      
+                  --database="$MYSQL_DATABASE"  -e "UPDATE '$MYSQL_TABLE_PREFIX'options SET option_value = replace(option_value, '$OLD_URL', '$NEW_URL') WHERE option_name = 'home' OR option_name = 'siteurl'; UPDATE '$MYSQL_TABLE_PREFIX'posts SET guid = replace(guid, '$OLD_URL','$NEW_URL'); UPDATE '$MYSQL_TABLE_PREFIX'posts SET post_content = replace(post_content, '$OLD_URL', '$NEW_URL'); UPDATE '$MYSQL_TABLE_PREFIX'postmeta SET meta_value = replace(meta_value,'$OLD_URL','$NEW_URL');"         
               if [ "$MYSQL_DB_IMPORT_ERROR" -ne 0 ]; then
                 echo "[ERROR] Unexpected error during database schema importation"
                 exit 1
