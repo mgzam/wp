@@ -102,7 +102,7 @@ objects:
                   value: "${APPLICATION_NAME}-db"
                 - 
                   name: MYSQL_TABLE_PREFIX
-                  value: wp_
+                  value: "${DB_TABLES_PREFIX}"
               image: "${APPLICATION_NAME}-img"
               livenessProbe: 
                 failureThreshold: 3
@@ -199,4 +199,9 @@ parameters:
     description: "Link of your new URL"
     name: NEW_URL
     required: true
-    value: 
+    value:
+    
+  - name: DB_TABLES_PREFIX
+    description: confirm existing wordpress tables prefix
+    value: "wp_"
+    required: true   
