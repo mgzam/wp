@@ -63,7 +63,7 @@ objects:
                   value: "${APPLICATION_NAME}-db"
               - 
                   name: MYSQL_TABLE_PREFIX
-                  value: wp_
+                  value: "${DB_TABLES_PREFIX}"
               - 
                   name: ZIP_LINK_SQL
                   value: ${ZIP_LINK_SQL}
