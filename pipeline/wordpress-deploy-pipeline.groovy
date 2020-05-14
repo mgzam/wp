@@ -41,6 +41,7 @@ node {
                         println "DeploymentConfig ${params.DB_NAME} deleted"
                     }
                     //delete configmap 
+                   
                     def cm = openshift.selector('cm', [app: "${params.APPLICATION_NAME}"])
                     if (cm.exists()) {
                         cm.delete()
@@ -207,12 +208,12 @@ node {
                     echo "$shortname"
                      //define route1 as route object to retrieve the hostname and use it as WP_HOME and WP_SITEURL
                     def route1 = openshift.selector("route", "${params.APPLICATION_NAME}").narrow('route').object()
-                    echo openshift.rsh("${shortname}", "mv wp-config.php wp-config.old").out
-                    echo openshift.rsh("${shortname}", """sh -c 'echo "define( \\" WP_HOME \\" , \\" https://${route1.spec.host} \\" );" >> wp-config.old'""").out
-                    echo openshift.rsh("${shortname}", """sh -c 'echo "define( \\" WP_SITEURL \\" , \\" https://${route1.spec.host} \\" );" >> wp-config.old'""").out
-                    echo openshift.rsh("${shortname}", "sh -c 'echo \"define('FORCE_SSL_ADMIN', true);\" >> wp-config.old'").out
-                    echo openshift.rsh("${shortname}", "sh -c 'echo \"if (strpos(\\\$_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false) \n \\\$_SERVER['HTTPS']='on';\" >> wp-config.old'").out
-                    println "wp-config.php was renamed to wp-config.old at ${shortname} container"
+                    echo openshift.rsh("${shortname}", "mv wp-config.php wp-config.new").out
+                    echo openshift.rsh("${shortname}", """sh -c 'echo "define( \\" WP_HOME \\" , \\" https://${route1.spec.host} \\" );" >> wp-config.new'""").out
+                    echo openshift.rsh("${shortname}", """sh -c 'echo "define( \\" WP_SITEURL \\" , \\" https://${route1.spec.host} \\" );" >> wp-config.new'""").out
+                    echo openshift.rsh("${shortname}", "sh -c 'echo \"define('FORCE_SSL_ADMIN', true);\" >> wp-config.new'").out
+                    echo openshift.rsh("${shortname}", "sh -c 'echo \"if (strpos(\\\$_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false) \n \\\$_SERVER['HTTPS']='on';\" >> wp-config.new'").out
+                    println "wp-config.php was renamed to wp-config.new at ${shortname} container"
                 }
             }
         } // stage
@@ -223,8 +224,8 @@ node {
                 openshift.withProject() {
                     echo "$shortname"
                     echo openshift.rsh("${shortname}", "cd /opt/app-root/src/").out
-                    echo openshift.rsh("${shortname}", "sh -c 'cp -rv /opt/app-root/src/wordpress/* /opt/app-root/src/'").out
-                    echo openshift.rsh("${shortname}", "sh -c 'cp -fv /opt/app-root/src/wp-config.old /opt/app-root/src/wp-config.php'").out
+                    echo openshift.rsh("${shortname}", "sh -c 'cp -rv /opt/app-root/src/wordpress/medicine/* /opt/app-root/src/'").out
+                    echo openshift.rsh("${shortname}", "sh -c 'cp -fv /opt/app-root/src/wp-config.new /opt/app-root/src/wp-config.php'").out
                     println "The site content have copied at ${shortname} container" 
                 }
             }
@@ -234,7 +235,7 @@ node {
             openshift.withCluster() {
                 openshift.withProject() {
                     echo "$shortname"
-                    echo openshift.rsh("${shortname}", "cp -v /opt/app-root/src/wordpress/.htaccess /opt/app-root/src/").out
+                    echo openshift.rsh("${shortname}", "cp -v /opt/app-root/src/wordpress/medicine/.htaccess /opt/app-root/src/").out
                     println "The site content have copied  at ${shortname} container"
                 }
             }
