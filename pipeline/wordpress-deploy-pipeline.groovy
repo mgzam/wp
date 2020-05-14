@@ -11,6 +11,7 @@ properties([
         string(name: 'ZIP_LINK_WP', defaultValue: '', description: ''),
         string(name: 'ZIP_LINK_SQL', defaultValue: '', description: ''),
         string(name: 'OLD_URL', defaultValue: '', description: ''),
+        string(name: 'DB_TABLES_PREFIX', defaultValue: '', description: ''),        
 
     ])
 ])
@@ -164,6 +165,7 @@ node {
                         "--param", "APPLICATION_NAME=${params.APPLICATION_NAME}", //Creation of the wordpress application
                         "--param", "ZIP_LINK_SQL=${params.ZIP_LINK_SQL}",
                         "--param", "OLD_URL=${params.OLD_URL}",
+                        "--param", "DB_TABLES_PREFIX=${params.DB_TABLES_PREFIX}",                                                       
                         "--param", "NEW_URL=${route1.spec.host}")) //put route1 hostname as new url
                     println "deploymentconfig ${params.APPLICATION_NAME} created"
 
