@@ -1,9 +1,9 @@
 # Deploy WordPress website on SCALe from an sql dump and website content files
 
-To migrate a WordPress website on SCALe, you need to have at least:
+To migrate a WordPress website on SCALe, you must have at least:
 
-* A zip file containing all the needed files, uploads and plugins for WordPress.
-* A zip containing SQL dump from your MySQL database.
+* A link to a zip file containing all the needed files, uploads and plugins for WordPress.
+* A link to a zip containing SQL dump from your MySQL database.
 
 ## Kind Reminder
 
