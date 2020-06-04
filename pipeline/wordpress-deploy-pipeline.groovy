@@ -166,7 +166,7 @@ node {
                         "--param", "ZIP_LINK_SQL=${params.ZIP_LINK_SQL}",
                         "--param", "OLD_URL=${params.OLD_URL}",
                         "--param", "DB_TABLES_PREFIX=${params.DB_TABLES_PREFIX}",                                                       
-                        "--param", "NEW_URL=${route1.spec.host}")) //put route1 hostname as new url
+                        "--param", "NEW_URL=https://${route1.spec.host}")) //put route1 hostname as new url
                     println "deploymentconfig ${params.APPLICATION_NAME} created"
 
                     echo "waiting for wordpress to become running"
@@ -211,10 +211,10 @@ node {
                      //define route1 as route object to retrieve the hostname and use it as WP_HOME and WP_SITEURL
                     def route1 = openshift.selector("route", "${params.APPLICATION_NAME}").narrow('route').object()
                     echo openshift.rsh("${shortname}", "mv wp-config.php wp-config.new").out
-                    echo openshift.rsh("${shortname}", """sh -c 'echo "define( \\' WP_HOME \\' , \\' https://${route1.spec.host} \\' );" >> wp-config.new'""").out
-                    echo openshift.rsh("${shortname}", """sh -c 'echo "define( \\' WP_SITEURL \\' , \\' https://${route1.spec.host} \\' );" >> wp-config.new'""").out
-                    echo openshift.rsh("${shortname}", "sh -c 'echo \"define('FORCE_SSL_ADMIN', true);\" >> wp-config.new'").out
-                    echo openshift.rsh("${shortname}", "sh -c 'echo \"if (strpos(\\\$_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false) \n \\\$_SERVER['HTTPS']='on';\" >> wp-config.new'").out
+                    echo openshift.rsh("${shortname}", "sh -c 'echo \"define( \\\' WP_HOME \\\' , \\\' https://${route1.spec.host} \\\' );\" >> wp-config.new'").out
+                    echo openshift.rsh("${shortname}", "sh -c 'echo \"define( \\\' WP_SITEURL \\\' , \\\' https://${route1.spec.host} \\\' );\" >> wp-config.new'").out
+                    echo openshift.rsh("${shortname}", "sh -c 'echo \"define(\\\'FORCE_SSL_ADMIN\\\', true);\" >> wp-config.new'").out
+                    echo openshift.rsh("${shortname}", "sh -c 'echo \"if (strpos(\\\$_SERVER[\\\'HTTP_X_FORWARDED_PROTO\\\'], \\\'https\\\') !== false) \n \\\$_SERVER[\\\'HTTPS\\\']=\\\'on\\\';\" >> wp-config.new'").out
                     println "wp-config.php was renamed to wp-config.new at ${shortname} container"
                 }
             }
