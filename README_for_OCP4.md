@@ -38,13 +38,6 @@ Access the OpenShift Console and then in the developper view , click +Add => Fro
 
 After a few minutes, your Jenkins should be up and running and can be accessed via his route. 
 
-Due to the cluster behaviour we have to add proxies to the jenkins deployment config environment, to do that you have to go  to :
-- Advanced => Project Details => Workloads => Jenkins => Actions => Edit Deployment Config => Environment
-then add these proxies and save it will re-deploy another jenkins: 
-http_proxy:    http://vpce-0c476c7107ff55b6c-nxv1mv5b.vpce-svc-0355b53fe136ffd13.eu-west-1.vpce.amazonaws.com:3128
-https_proxy:  http://vpce-0c476c7107ff55b6c-nxv1mv5b.vpce-svc-0355b53fe136ffd13.eu-west-1.vpce.amazonaws.com:3128
-no_proxy:   .aws-40e4cd59.scale-k8s.com,.cloud.local,.cluster.local,.eu-west-1.compute.internal,.sanofi.com,.svc,10.128.0.0/14,10.24.205.0/24,127.0.0.1,169.254.169.254,172.30.0.0/16,api-int.ocp-03d497f2.aws-40e4cd59.scale-k8s.com,etcd-0.ocp-03d497f2.aws-40e4cd59.scale-k8s.com,etcd-1.ocp-03d497f2.aws-40e4cd59.scale-k8s.com,etcd-2.ocp-03d497f2.aws-40e4cd59.scale-k8s.com,localhost
-
 ## Running Build-pipeline and Deploy pipeline 
 
 * Go to the repository where you can find the  yaml file for the build pipeline yaml: https://github.com/rabah450/wp-mgr
@@ -61,16 +54,23 @@ After all those steps, you should have The Database and the Wordpress pod up and
 ## Deploy PhpMyAdmin
 
 To deploy phpmyadmin, follow the following Steps:
+
 * Click +Add => From Container Image
+
 * In image name section past this : **startxfr/openshift-phpmyadmin** . Then click the research icon, the startx image for openshift should appear, next click on create.
+
 * Now the it deployed, in order to connect to database we have to create a configmapin which contain the information to make the connection.
 Click on Advanced => ConfigMap => Create ConfigMap:
+
  - git the name you want 
  - replace the data section by this :
-      DB_SERVICE_HOST: "my-wordpress-site-db"
-      DB_SERVICE_PORT: "3306"
-      DB_SERVICE_PWD: "3x0qWrsifMp0"
-      DB_SERVICE_USER: "userebe56428"
+ 
+
+      * DB_SERVICE_HOST: "my-wordpress-site-db"
+      * DB_SERVICE_PORT: "3306"
+      * DB_SERVICE_PWD: "3x0qWrsifMp0"
+      * DB_SERVICE_USER: "userebe56428"
+
 **Note: for the DB_SERVICE_PWD and DB_SERVICE_USER, take the information from : Project details => Secret => my-wordpress-site-mysql-secret.**
 
 
