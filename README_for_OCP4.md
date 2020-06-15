@@ -71,6 +71,6 @@ Click on Advanced => ConfigMap => Create ConfigMap:
       * DB_SERVICE_PWD: "3x0qWrsifMp0"
       * DB_SERVICE_USER: "userebe56428"
 
-**Note: for the DB_SERVICE_PWD and DB_SERVICE_USER, take the information from : Project details => Secret => my-wordpress-site-mysql-secret.**
+*Note: for the DB_SERVICE_PWD and DB_SERVICE_USER, take the information from : Project details => Secret => my-wordpress-site-mysql-secret.*
 
 
