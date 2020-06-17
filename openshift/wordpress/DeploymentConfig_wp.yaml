@@ -38,10 +38,6 @@ objects:
                 mountPath: "/opt/wordpress"
               env:
               - 
-                  name: no_proxy
-                  value: ".cloud.local,.cluster.local,.compute.internal,.service.cloud.local,.svc,169.254.169.254,172.30.0.0/16,172.30.0.1,194.13.15.158,194.13.15.165,194.13.15.221,.aws-40e4cd59.scale-k8s.com,s3.eu-west-1.amazonaws.com"
-                        
-              - 
                   name: MYSQL_DATABASE
                   value: wordpress
               - 
@@ -74,10 +70,6 @@ objects:
           containers: 
             - 
               env: 
-              - 
-                  name: no_proxy
-                  value: ".cloud.local,.cluster.local,.compute.internal,.service.cloud.local,.svc,169.254.169.254,172.30.0.0/16,172.30.0.1,194.13.15.158,194.13.15.165,194.13.15.221,.aws-40e4cd59.scale-k8s.com,s3.eu-west-1.amazonaws.com"
-          
               - 
                   name: MYSQL_DATABASE
                   value: wordpress
