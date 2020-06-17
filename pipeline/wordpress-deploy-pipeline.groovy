@@ -166,7 +166,7 @@ node {
                         "--param", "ZIP_LINK_SQL=${params.ZIP_LINK_SQL}",
                         "--param", "OLD_URL=${params.OLD_URL}",
                         "--param", "DB_TABLES_PREFIX=${params.DB_TABLES_PREFIX}",                                                       
-                        "--param", "NEW_URL=https://${route1.spec.host}")) //put route1 hostname as new url
+                        "--param", "NEW_URL='https://${route1.spec.host}'")) //put route1 hostname as new url
                     println "deploymentconfig ${params.APPLICATION_NAME} created"
 
                     echo "waiting for wordpress to become running"
