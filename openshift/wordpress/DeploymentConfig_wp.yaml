@@ -38,21 +38,6 @@ objects:
                 mountPath: "/opt/wordpress"
               env:
               - 
-                  name: HTTPS_PROXY
-                  value: "http://vpce-0c476c7107ff55b6c-nxv1mv5b.vpce-svc-0355b53fe136ffd13.eu-west-1.vpce.amazonaws.com:3128"
-              - 
-                  name: HTTP_PROXY
-                  value: "http://vpce-0c476c7107ff55b6c-nxv1mv5b.vpce-svc-0355b53fe136ffd13.eu-west-1.vpce.amazonaws.com:3128"
-              - 
-                  name: NO_PROXY
-                  value: ".cloud.local,.cluster.local,.compute.internal,.service.cloud.local,.svc,169.254.169.254,172.30.0.0/16,172.30.0.1,194.13.15.158,194.13.15.165,194.13.15.221,.aws-40e4cd59.scale-k8s.com,s3.eu-west-1.amazonaws.com"
-              - 
-                  name: https_proxy
-                  value: "http://vpce-0c476c7107ff55b6c-nxv1mv5b.vpce-svc-0355b53fe136ffd13.eu-west-1.vpce.amazonaws.com:3128"
-              - 
-                  name: http_proxy
-                  value: "http://vpce-0c476c7107ff55b6c-nxv1mv5b.vpce-svc-0355b53fe136ffd13.eu-west-1.vpce.amazonaws.com:3128"
-              - 
                   name: no_proxy
                   value: ".cloud.local,.cluster.local,.compute.internal,.service.cloud.local,.svc,169.254.169.254,172.30.0.0/16,172.30.0.1,194.13.15.158,194.13.15.165,194.13.15.221,.aws-40e4cd59.scale-k8s.com,s3.eu-west-1.amazonaws.com"
                         
@@ -89,21 +74,6 @@ objects:
           containers: 
             - 
               env: 
-              - 
-                  name: HTTPS_PROXY
-                  value: "http://vpce-0c476c7107ff55b6c-nxv1mv5b.vpce-svc-0355b53fe136ffd13.eu-west-1.vpce.amazonaws.com:3128"
-              - 
-                  name: HTTP_PROXY
-                  value: "http://vpce-0c476c7107ff55b6c-nxv1mv5b.vpce-svc-0355b53fe136ffd13.eu-west-1.vpce.amazonaws.com:3128"
-              - 
-                  name: NO_PROXY
-                  value: ".cloud.local,.cluster.local,.compute.internal,.service.cloud.local,.svc,169.254.169.254,172.30.0.0/16,172.30.0.1,194.13.15.158,194.13.15.165,194.13.15.221,.aws-40e4cd59.scale-k8s.com,s3.eu-west-1.amazonaws.com"
-              - 
-                  name: https_proxy
-                  value: "http://vpce-0c476c7107ff55b6c-nxv1mv5b.vpce-svc-0355b53fe136ffd13.eu-west-1.vpce.amazonaws.com:3128"
-              - 
-                  name: http_proxy
-                  value: "http://vpce-0c476c7107ff55b6c-nxv1mv5b.vpce-svc-0355b53fe136ffd13.eu-west-1.vpce.amazonaws.com:3128"
               - 
                   name: no_proxy
                   value: ".cloud.local,.cluster.local,.compute.internal,.service.cloud.local,.svc,169.254.169.254,172.30.0.0/16,172.30.0.1,194.13.15.158,194.13.15.165,194.13.15.221,.aws-40e4cd59.scale-k8s.com,s3.eu-west-1.amazonaws.com"
