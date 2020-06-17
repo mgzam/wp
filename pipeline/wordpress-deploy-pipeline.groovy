@@ -226,8 +226,8 @@ node {
                 openshift.withProject() {
                     echo "$shortname"
                     echo openshift.rsh("${shortname}", "cd /opt/app-root/src/").out
-                    echo openshift.rsh("${shortname}", "sh -c 'cp -rv /opt/app-root/src/wordpress/* /opt/app-root/src/'").out
-                    echo openshift.rsh("${shortname}", "sh -c 'cp -fv /opt/app-root/src/wp-config.new /opt/app-root/src/wp-config.php'").out
+                    echo openshift.rsh("${shortname}", "sh -c 'cp -r /opt/app-root/src/wordpress/* /opt/app-root/src/'").out
+                    echo openshift.rsh("${shortname}", "sh -c 'cp -f /opt/app-root/src/wp-config.new /opt/app-root/src/wp-config.php'").out
                     println "The site content have copied at ${shortname} container" 
                 }
             }

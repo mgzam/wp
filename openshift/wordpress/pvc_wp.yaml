@@ -31,7 +31,7 @@ parameters:
     - 
         name: WORDPRESS_VOLUME_SIZE
         description: Size of the persistent volume for Wordpress.
-        value: 1Gi
+        value: 10Gi
         required: true
     - 
         name: WORDPRESS_VOLUME_TYPE
