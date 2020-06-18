@@ -34,6 +34,7 @@ node {
                 openshift.apply(openshift.process(readFile('openshift/wordpress/buildConfig.yaml'),
                     "--param", "APPLICATION_NAME=${params.APPLICATION_NAME}",
                     "--param", "QUICKSTART_REPOSITORY_URL=${build_params.QUICKSTART_REPOSITORY_URL}",
+                    "--param", "WORDPRESS_INSTALL_VERSION=${build_params.WORDPRESS_INSTALL_VERSION}",
                     "--param", "PHP_VERSION=${build_params.PHP_VERSION}"))
 
                 println "buildconfig ${params.APPLICATION_NAME} created"

@@ -28,6 +28,9 @@ objects:
             strategy:
                 type: Source
                 sourceStrategy:
+                    env:  
+                        name: WORDPRESS_INSTALL_VERSION
+                        value: ${WORDPRESS_INSTALL_VERSION}
                     from:
                         kind: ImageStreamTag
                         namespace: openshift
@@ -68,4 +71,9 @@ parameters:
         name: PHP_VERSION
         description: The version of the PHP builder.
         value: '7.0'
+        required: true
+
+    -   name: WORDPRESS_INSTALL_VERSION
+        description: The version of the WORDPRESS.
+        value: '5.4.2'
         required: true
