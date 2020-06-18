@@ -99,7 +99,7 @@ objects:
                   name: MYSQL_TABLE_PREFIX
                   value: "${DB_TABLES_PREFIX}"
               livenessProbe: 
-                failureThreshold: 3
+                failureThreshold: 5
                 httpGet: 
                   httpHeaders: 
                     - 
@@ -111,9 +111,9 @@ objects:
                 initialDelaySeconds: 5
                 periodSeconds: 120
                 successThreshold: 1
-                timeoutSeconds: 1
+                timeoutSeconds: 10
               readinessProbe: 
-                failureThreshold: 3
+                failureThreshold: 5
                 httpGet: 
                   httpHeaders: 
                     - 
@@ -125,7 +125,7 @@ objects:
                 initialDelaySeconds: 5
                 periodSeconds: 120
                 successThreshold: 1
-                timeoutSeconds: 1
+                timeoutSeconds: 10
               resources: 
                 limits: 
                   memory: "${WORDPRESS_MEMORY_LIMIT}"
