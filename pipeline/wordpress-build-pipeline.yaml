@@ -90,7 +90,7 @@ objects:
 parameters:
 - name: SOURCES_URL
   description: URL for the GIT repo where templates reside.
-  value: https://git@github.com:/sculang/demo-wp.git
+  value: https://github.com/rabah450/wp-mgr.git
 - name: APPLICATION_NAME
   description: The name of the WordPress instance.
   value: my-wordpress-site
@@ -103,11 +103,11 @@ parameters:
   required: true
 - name: DEPLOY_PROJECT
   description: The name of the SCALe project to deploy the website.
-  value: scu-wordpress
+  value: 
   from: "[a-zA-Z0-9]"
   required: true
 - name: APP_HOST
-  description: Enter your application name (hostname of new URL)
+  description: Enter your application name (hostname of new URL it will be completed by the wildcard domain)
   value: my-wordpress-site
   from: "[a-zA-Z0-9]"
   required: false
