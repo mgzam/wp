@@ -108,7 +108,8 @@ objects:
                   path: /wp-admin/install.php
                   port: 8080
                   scheme: HTTP
-                periodSeconds: 300
+                initialDelaySeconds: 5
+                periodSeconds: 120
                 successThreshold: 1
                 timeoutSeconds: 1
               readinessProbe: 
@@ -121,7 +122,8 @@ objects:
                   path: /wp-admin/install.php
                   port: 8080
                   scheme: HTTP
-                periodSeconds: 300
+                initialDelaySeconds: 5
+                periodSeconds: 120
                 successThreshold: 1
                 timeoutSeconds: 1
               resources: 
