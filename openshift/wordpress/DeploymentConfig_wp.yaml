@@ -98,6 +98,32 @@ objects:
               - 
                   name: MYSQL_TABLE_PREFIX
                   value: "${DB_TABLES_PREFIX}"
+              livenessProbe: 
+                failureThreshold: 3
+                httpGet: 
+                  httpHeaders: 
+                    - 
+                      name: X-Forwarded-Proto
+                      value: https
+                  path: /wp-admin/install.php
+                  port: 8080
+                  scheme: HTTP
+                periodSeconds: 300
+                successThreshold: 1
+                timeoutSeconds: 1
+              readinessProbe: 
+                failureThreshold: 3
+                httpGet: 
+                  httpHeaders: 
+                    - 
+                      name: X-Forwarded-Proto
+                      value: https
+                  path: /wp-admin/install.php
+                  port: 8080
+                  scheme: HTTP
+                periodSeconds: 300
+                successThreshold: 1
+                timeoutSeconds: 1
               resources: 
                 limits: 
                   memory: "${WORDPRESS_MEMORY_LIMIT}"
