@@ -30,7 +30,7 @@ objects:
                 sourceStrategy:
                     env:  
                         name: WORDPRESS_INSTALL_VERSION
-                        value: ${WORDPRESS_INSTALL_VERSION}
+                        value: '${WORDPRESS_INSTALL_VERSION}'
                     from:
                         kind: ImageStreamTag
                         namespace: openshift
