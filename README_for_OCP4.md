@@ -38,16 +38,20 @@ Access the OpenShift Console and then in the developper view , click +Add => Fro
 
 After a few minutes, your Jenkins should be up and running and can be accessed via his route. 
 
+## Run your pipeline
+* Follow theses instructions: +Add => From Catalog => others => wordpres-migration-template
+* Fill in with the required parameter.
+* In the left pane click Builds you will see two build config, **wordpress-build-pipeline** and **wordpress-deploy-pipeline**
+* click on the **wordpress-build-pipeline** => Action => Start Build to launch the build wait till it completed.
+* And then launch the **wordpress-deploy-pipeline** as above, to deploy your wordpress site.
+
 ## Customizing your pipeline 
 
 * Fork this repository https://github.com/rabah450/wp-mgr
 * Customize your pipeline groovy file in [pipelines/](pipeline/) if needed.
 * Copy the content of [pipeline/wordpress-build-pipeline.yaml](pipeline/wordpress-build-pipeline.yaml) to +Add => from Yaml, it will create a ressource in the catalog
-* Then +Add => From Catalog => others => wordpres-migration-template
-* Fill in with the required parameter.
-* In the left pane click Builds you will see two build config, **wordpress-build-pipeline** and **wordpress-deploy-pipeline**
-* click on the **wordpress-build-pipeline** => Action => Start Build to launch the build wait till it completed.
-* And then launch the **wordpress-deploy-pipeline** as above, to deploy your wordpress site.
+* To run your custom pipeline : +Add => From Catalog => others => wordpres-migration-template, follow the steps above.
+
 
 After all those steps, you should have The Database and the Wordpress pod up and running. In order to manage your database i recommend you to deploy phpmyadmin.
 
