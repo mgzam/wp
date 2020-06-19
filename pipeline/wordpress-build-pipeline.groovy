@@ -4,7 +4,6 @@ properties([
         string(name: 'BRANCH', defaultValue: 'master', description: '', trim: false),
         string(name: 'GIT_CREDENTIALS', defaultValue: 'jenkins-git-credentials', description: '', trim: false),
         string(name: 'SOURCES_URL', defaultValue: '', description: '', trim: false),
-        string(name: 'WORDPRESS_INSTALL_VERSION', defaultValue: '', description: ''),
         string(name: 'APPLICATION_NAME', defaultValue: '', description: ''),
     ])
 ])
@@ -35,7 +34,6 @@ node {
                 openshift.apply(openshift.process(readFile('openshift/wordpress/buildConfig.yaml'),
                     "--param", "APPLICATION_NAME=${params.APPLICATION_NAME}",
                     "--param", "QUICKSTART_REPOSITORY_URL=${build_params.QUICKSTART_REPOSITORY_URL}",
-                    "--param", "WORDPRESS_INSTALL_VERSION=${build_params.WORDPRESS_INSTALL_VERSION}",
                     "--param", "PHP_VERSION=${build_params.PHP_VERSION}"))
 
                 println "buildconfig ${params.APPLICATION_NAME} created"

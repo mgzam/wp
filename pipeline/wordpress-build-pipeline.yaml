@@ -37,9 +37,7 @@ objects:
           - name: APPLICATION_NAME
             value: ${APPLICATION_NAME}
           - name: GIT_CREDENTIALS
-            value: jenkins-git-credentials
-          - name: WORDPRESS_INSTALL_VERSION
-            value: ${WORDPRESS_INSTALL_VERSION}              
+            value: jenkins-git-credentials           
       type: JenkinsPipeline
     triggers: []
 
@@ -131,8 +129,3 @@ parameters:
   description: confirm existing wordpress tables prefix
   value: "wp_"
   required: true  
-- name: WORDPRESS_INSTALL_VERSION
-  description: The version of the WORDPRESS.
-  value: '5.4.2'
-  required: true
-
